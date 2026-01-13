@@ -289,6 +289,98 @@
             .float-btn { width: 60px; height: 60px; }
             .float-btn img { width: 34px; }
         }
+
+        .video-slider {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    border-radius: 14px;
+    margin: 1.3rem 0;
+    background: #111;
+    touch-action: pan-y;
+}
+
+.video-slides {
+    display: flex;
+    height: 100%;
+    transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.video-slides video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+/* Navigation arrows */
+.slider-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 48px;
+    height: 48px;
+    background: rgba(0,0,0,0.55);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    font-size: 1.8rem;
+    cursor: pointer;
+    opacity: 0.8;
+    transition: all 0.2s;
+    z-index: 10;
+}
+
+.slider-arrow:hover,
+.slider-arrow:active {
+    opacity: 1;
+    background: rgba(0,0,0,0.8);
+}
+
+.prev { left: 12px; }
+.next { right: 12px; }
+
+/* Thumbnails */
+.video-thumbs {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 16px;
+}
+
+.video-thumbs img {
+    width: 90px;
+    height: 56px;
+    object-fit: cover;
+    border-radius: 8px;
+    cursor: pointer;
+    opacity: 0.75;
+    transition: all 0.25s ease;
+}
+
+.video-thumbs img.active,
+.video-thumbs img:hover {
+    opacity: 1;
+    transform: scale(1.08);
+    outline: 3px solid #8b6f47;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+/* Mobile adjustments */
+@media (max-width: 600px) {
+    .video-thumbs img {
+        width: 72px;
+        height: 45px;
+    }
+    .slider-arrow {
+        width: 44px;
+        height: 44px;
+        font-size: 1.5rem;
+    }
+    .prev { left: 8px; }
+    .next { right: 8px; }
+}
     </style>
 </head>
 <body>
@@ -319,24 +411,52 @@
     </div>
 
     <div class="card">
-        <h2>Puppy Videos</h2>
-        <div class="video-slider">
-            <div class="video-slides" id="videoSlides">
-                <video src="KokoHuey's Little Poodle 4.mp4" muted loop playsinline></video>
-                <video src="KokoHuey's Little Poodle 5.mp4" muted loop playsinline></video>
-                <video src="KokoHuey's Little Poodle 6.mp4" muted loop playsinline></video>
-                <video src="KokoHuey's Little Poodle 7.mp4" muted loop playsinline></video>
-                <video src="KokoHuey's Little Poodle 8.mp4" muted loop playsinline></video>
-                <video src="KokoHuey's Little Poodle 9.mp4" muted loop playsinline></video>
-            </div>
+    <h2>Puppy Videos</h2>
+
+    <div class="video-slider">
+        <!-- Slides container -->
+        <div class="video-slides" id="videoSlides">
+            <video src="KokoHuey's Little Poodle 4.mp4" muted loop playsinline preload="metadata"></video>
+            <video src="KokoHuey's Little Poodle 5.mp4" muted loop playsinline preload="metadata"></video>
+            <video src="KokoHuey's Little Poodle 6.mp4" muted loop playsinline preload="metadata"></video>
+            <video src="KokoHuey's Little Poodle 7.mp4" muted loop playsinline preload="metadata"></video>
+            <video src="KokoHuey's Little Poodle 8.mp4" muted loop playsinline preload="metadata"></video>
+            <video src="KokoHuey's Little Poodle 9.mp4" muted loop playsinline preload="metadata"></video>
         </div>
 
-        <div class="video-thumbs">
-            <img src="KokoHuey's Little Poodle 4.mp4" class="active" onclick="goVideo(0)">
-            <img src="KokoHuey's Little Poodle 5.mp4" onclick="goVideo(1)">
-            <img src="KokoHuey's Little Poodle 6.mp4" onclick="goVideo(2)">
-        </div>
+        <!-- Navigation arrows -->
+        <button class="slider-arrow prev" onclick="prevVideo()">❮</button>
+        <button class="slider-arrow next" onclick="nextVideo()">❯</button>
     </div>
+
+    <!-- Thumbnails -->
+    <div class="video-thumbs">
+        <img src="https://media.istockphoto.com/id/1210349925/photo/a-cute-toy-poodle-looking-at-camera-smiling.jpg?s=612x612&w=0&k=20&c=fb4jCezaEsWB5rEN969Cc0Q6Vw-c6gI8kbgVyqq6sGI=" 
+             class="active" 
+             onclick="goVideo(0)" 
+             alt="Happy white toy poodle">
+
+        <img src="https://thumbs.dreamstime.com/b/beautiful-toy-poodle-looking-camera-having-fun-green-lawn-portrait-happy-young-puppy-shot-sunny-day-outdoors-341288439.jpg" 
+             onclick="goVideo(1)" 
+             alt="Toy poodle playing outdoors">
+
+        <img src="https://www.shutterstock.com/shutterstock/photos/2667993879/display_1500/stock-photo-red-toy-poodle-puppy-sitting-on-green-grass-fluffy-cute-dog-looks-at-the-camera-domestic-pets-2667993879.jpg" 
+             onclick="goVideo(2)" 
+             alt="Red toy poodle on grass">
+
+        <img src="https://images.unsplash.com/photo-1617890686219-509e0a069e26?w=400" 
+             onclick="goVideo(3)" 
+             alt="Cute poodle portrait">
+
+        <img src="https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?w=400" 
+             onclick="goVideo(4)" 
+             alt="Playful toy poodle">
+
+        <img src="https://images.unsplash.com/photo-1620421680010-0766ff230392?w=400" 
+             onclick="goVideo(5)" 
+             alt="Fluffy poodle close-up">
+    </div>
+</div>
 
     <div class="card zelle-box">
         <h2>Reservation Process</h2>
@@ -493,6 +613,68 @@ function statusMsg(text, color) {
 
 // Init DB on load
 window.addEventListener("load", initDb);
+
+// Video Slider Logic
+let currentIndex = 0;
+let autoInterval = null;
+const allVideos = videoContainer.querySelectorAll('video');
+const thumbnails = document.querySelectorAll('.video-thumbs img');
+const total = allVideos.length;
+
+function goVideo(index) {
+    // Stop all videos
+    allVideos.forEach(v => {
+        v.pause();
+        v.currentTime = 0;
+    });
+
+    currentIndex = (index + total) % total; // handle negative values
+
+    // Move slider
+    videoContainer.style.transform = `translateX(-${currentIndex * 100}%)`;
+
+    // Update thumbnails
+    thumbnails.forEach(t => t.classList.remove('active'));
+    thumbnails[currentIndex]?.classList.add('active');
+
+    // Play current video
+    allVideos[currentIndex]?.play().catch(() => {});
+}
+
+function nextVideo() {
+    goVideo(currentIndex + 1);
+}
+
+function prevVideo() {
+    goVideo(currentIndex - 1);
+}
+
+// Auto play
+function startAutoPlay() {
+    autoInterval = setInterval(nextVideo, 7000);
+}
+
+function stopAutoPlay() {
+    if (autoInterval) {
+        clearInterval(autoInterval);
+        autoInterval = null;
+    }
+}
+
+// Event listeners
+thumbnails.forEach((thumb, i) => {
+    thumb.addEventListener('click', () => {
+        stopAutoPlay();
+        goVideo(i);
+    });
+});
+
+document.querySelector('.prev')?.addEventListener('click', stopAutoPlay);
+document.querySelector('.next')?.addEventListener('click', stopAutoPlay);
+
+// Start everything
+goVideo(0);           // show & play first video
+startAutoPlay();      // begin auto sliding
 </script>
 
 </body>
